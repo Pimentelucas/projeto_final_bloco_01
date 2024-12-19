@@ -45,4 +45,27 @@ public abstract class Calcados {
 		this.preco = preco;
 	}
 	
+	public void visualizar() {
+
+		String tipo = "";
+		
+		switch(this.tipo) {
+		case 1:
+			tipo = "Tenis";
+		break;
+		case 2:
+			tipo = "Sandália";
+		break;
+		}
+		
+		System.out.println("\n\n***********************************************************");
+		System.out.println("Dados do calçado:");
+		System.out.println("***********************************************************");
+		System.out.println("Código do item: " + this.codigo);
+		System.out.println("Tamanho: " + this.tamanho);
+		System.out.println("Tipo do item: " + tipo);
+		System.out.println("Preço: " + this.preco);
+		
+
+	}
 }

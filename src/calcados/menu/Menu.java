@@ -4,13 +4,21 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import calcados.controller.CalcadosController;
+import calcados.model.Calcados;
+import calcados.model.Tenis;
+
 public class Menu {
 
 	public static void main(String[] args) {
 		
+		CalcadosController calcado = new CalcadosController();
+		
 		Scanner leia = new Scanner (System.in);
 		
-		int opcao, modalidade;
+		int opcao, tipo, tamanho, codigo;
+		float preco;
+		String modalidade;
 		
 		while (true) {
 			
@@ -49,22 +57,68 @@ public class Menu {
 			switch (opcao) {
 				case 1:
 					System.out.println("Digite as seguintes informações para adicionar um item:\n\n");					
+					System.out.println("Digite o tamanho do item");
+					tamanho = leia.nextInt();
+					
+					do { 
+						System.out.println("Digite o Tipo do calçado (1-Tenis ou 2-Sandália): ");
+						tipo = leia.nextInt();
+					}while(tipo < 1 && tipo > 2);
+					
+					System.out.println("Digite o preço do item: ");
+					preco = leia.nextFloat();
+					
+					switch(tipo) {
+						case 1 -> {  
+							System.out.println("Digite a modalidade do tenis: ");
+							modalidade = leia.toString();
+							calcado.cadastrar(new Tenis (calcado.gerarCodigo(), tamanho, tipo, preco, modalidade));
+						}
+					}
 					keyPress();
 					break;
 				case 2:
 					System.out.println("Os itens são:\n\n");
+					calcado.listarTodas();
 					keyPress();
 					break;
 				case 3:
-					System.out.println("Digite o código do item que deseja:\n\n");
+					System.out.println("Digite o código do item que deseja buscar:\n\n");
+					codigo = leia.nextInt();
+					
+					calcado.procurarPorCodigo(codigo);
 					keyPress();
 					break;
 				case 4:
-					System.out.println("Digite o código do item: ");
+					System.out.println("Digite o código do item que deseja atualizar: ");
+					codigo = leia.nextInt();
+					var buscaCalcado = calcado.buscarNaCollection (codigo);
+					if(buscaCalcado != null) { 
+						tipo = buscaCalcado.getTipo();
+						System.out.println("Digite o tamanho do calcado: ");
+						tamanho = leia.nextInt();
+						System.out.println("Digite o preço: ");
+						preco = leia.nextFloat();
+						
+						switch (tipo) {
+							case 1 -> {
+								System.out.println("Digite a modalidade: ");
+								modalidade = leia.next();
+							}
+							
+							default -> {
+								System.out.println("Tipo de conta calçado inválido!");
+							}
+						}	
+					}else {
+						System.out.println("O calçado não foi encontrado!"); 
+					}
 					keyPress();
 					break;
 				case 5:
 					System.out.println("Digite o número do código do item que deseja apagar: ");
+					codigo = leia.nextInt();
+					calcado.deletar(codigo);
 					keyPress();
 					break;
 	
