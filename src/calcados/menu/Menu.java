@@ -1,4 +1,4 @@
-package loja.menu;
+package calcados.menu;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -10,7 +10,7 @@ public class Menu {
 		
 		Scanner leia = new Scanner (System.in);
 		
-		int opcao;
+		int opcao, modalidade;
 		
 		while (true) {
 			
